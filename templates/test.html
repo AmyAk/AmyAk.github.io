@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+var compteur = 0;
+function incremente(){
+compteur ++;
+document.getElementById("compteur").firstChild.nodeValue = compteur;
+}
+</script>
+
+<!--<a id="compteur" href="javascript:incremente()">0</a>-->
+
+<textarea  onclick="javascript:incremente()">0</textarea>
+<br>
+nombre :<label id="compteur">{{erreur1}} </label>
+
+</body>
+</html>

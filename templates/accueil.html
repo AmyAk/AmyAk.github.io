@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/html">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Évaluation QUEREO_FR</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+
+<!--  &lt;!&ndash; Facebook and Twitter integration &ndash;&gt;-->
+<!--	<meta property="og:title" content=""/>-->
+<!--	<meta property="og:image" content=""/>-->
+<!--	<meta property="og:url" content=""/>-->
+<!--	<meta property="og:site_name" content=""/>-->
+<!--	<meta property="og:description" content=""/>-->
+<!--	<meta name="twitter:title" content="" />-->
+<!--	<meta name="twitter:image" content="" />-->
+<!--	<meta name="twitter:url" content="" />-->
+<!--	<meta name="twitter:card" content="" />-->
+
+	<link href="{{url_for('static',filename='https://fonts.googleapis.com/css?family=Poppins:300,400,500,600')}}" rel="stylesheet">
+	<link href="{{url_for('static',filename='https://fonts.googleapis.com/css?family=Nunito:200,300,400')}}" rel="stylesheet">
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/animate.css')}}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/icomoon.css')}}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/magnific-popup.css')}}">
+
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/owl.carousel.min.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='css/owl.theme.default.min.css')}}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+
+	<!-- Modernizr JS -->
+	<script src="{{url_for('static',filename='js/modernizr-2.6.2.min.js')}}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="{{url_for('static',filename='js/respond.min.js')}}"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+
+    <div class="colorlib-loader"></div>
+
+	<p id="page">
+		<nav class="colorlib-nav" role="navigation" style="background-color:#499bea">
+			<div class="top-menu">
+				<div class="container">
+					<div class="row">
+						<div class=" text-right menu-1">
+							<ul >
+                                <li ><a href="{{url_for('index')}}">Accueil</a></li>
+								<li class="has-dropdown" >
+									<a href="work.html">évaluation</a>
+									<ul class="dropdown">
+										<li><a href="work-grid.html">QUEREO_FR</a></li>
+                                        <li><a href="work-grid.html">QUEREO_EN</a></li>
+										<li><a href="work-grid-without-text.html">Génération Automatique de Corpus Q/R</a></li>
+									</ul>
+								</li>
+								<li><a href="services.html">documentation</a></li>
+                                <li><a href="about.html">contact</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+        </nav>
+
+
+
+<br><br><br><br>
+<form action="http://localhost:5000/resultat" method="post">
+	<ol>
+        {%for i in range(0, len)%}
+		<li><label style = "font-family:georgia,garamond,serif;font-size:19px;font-style:italic; padding-left:10px; color:blue" >Question :</label> <font color="black"> {{content[i]['QUESTION']}}</font>
+			<br><label style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic; padding-left:10px; color:blue" >Réponse :</label> <font color="black">{{content[i]['GENERATED_ANSWER']}}</font>
+		<br><span class=" colorlib-bg-white" style="padding-left:10px;padding-right:10px;padding-top:30px;padding-bottom:15px">
+			<label style="color:black; "><b>Évaluation : </b>  </label>
+				<select  id="listeEval" name="eval" >
+					<option value="correcte">Correcte</option>
+					<option value="semicorrecte">Correcte mais pas naturelle</option>
+					<option value="faux">Non Correcte</option>
+			</select>
+			<label style="color:black"><b>Type d'erreur : </b></label>
+				<select id="listeErreur" name="erreur" >
+				<option value="ordre">Ordre des mots</option>
+					<option value="accord">Accord grammatical</option>
+					<option value="extra">Mot en trop</option>
+					<option value="manque">Manque un ou plusieurs termes</option>
+					<option value="aucun" selected>Aucune</option>
+					<option value="prep" >Prépostion incorrecte</option>
+					<option value="autre" >Autre</option>
+
+			</select>
+			<label style="color:black"><b>Commentaire : </b></label>
+				<textarea  name="commentaire" rows="1" cols="20" autocomplete="on" ></textarea>
+
+			</span>
+		</li>
+	<br>
+	{%endfor%}
+
+	</ol>
+		<center> <input style="color:white;background-color:blue" type="submit" value="Valider vos réponses" /></center>
+			</form>
+<br><br>
+
+
+
+
+
+
+
+
+<!--			<div class="container">-->
+<!--				<div class="row row-pb-md">-->
+<!--					<div class="col-md-3 colorlib-widget">-->
+<!--						<h4>About unapp</h4>-->
+<!--						<p>Far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics</p>-->
+<!--						<p>-->
+<!--							<ul class="colorlib-social-icons">-->
+<!--								<li><a href="#"><i class="icon-twitter"></i></a></li>-->
+<!--								<li><a href="#"><i class="icon-facebook"></i></a></li>-->
+<!--								<li><a href="#"><i class="icon-linkedin"></i></a></li>-->
+<!--								<li><a href="#"><i class="icon-dribbble"></i></a></li>-->
+<!--							</ul>-->
+<!--						</p>-->
+<!--					</div>-->
+<!--					<div class="col-md-3 colorlib-widget">-->
+<!--						<h4>Information</h4>-->
+<!--						<p>-->
+<!--							<ul class="colorlib-footer-links">-->
+<!--								<li><a href="#"><i class="icon-check"></i> Home</a></li>-->
+<!--								<li><a href="#"><i class="icon-check"></i> Gallery</a></li>-->
+<!--								<li><a href="#"><i class="icon-check"></i> About</a></li>-->
+<!--								<li><a href="#"><i class="icon-check"></i> Blog</a></li>-->
+<!--								<li><a href="#"><i class="icon-check"></i> Contact</a></li>-->
+<!--								<li><a href="#"><i class="icon-check"></i> Privacy</a></li>-->
+<!--							</ul>-->
+<!--						</p>-->
+<!--					</div>-->
+
+<!--					<div class="col-md-3 colorlib-widget">-->
+<!--						<h4>Recent Blog</h4>-->
+<!--						<div class="f-blog">-->
+<!--							<a href="blog.html" class="blog-img" style="background-image: url(images/blog-1.jpg);">-->
+<!--							</a>-->
+<!--							<div class="desc">-->
+<!--								<h2><a href="blog.html">Photoshoot Technique</a></h2>-->
+<!--								<p class="admin"><span>30 March 2018</span></p>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--						<div class="f-blog">-->
+<!--							<a href="blog.html" class="blog-img" style="background-image: url(images/blog-2.jpg);">-->
+<!--							</a>-->
+<!--							<div class="desc">-->
+<!--								<h2><a href="blog.html">Camera Lens Shoot</a></h2>-->
+<!--								<p class="admin"><span>30 March 2018</span></p>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--						<div class="f-blog">-->
+<!--							<a href="blog.html" class="blog-img" style="background-image: url(images/blog-3.jpg);">-->
+<!--							</a>-->
+<!--							<div class="desc">-->
+<!--								<h2><a href="blog.html">Imahe the biggest photography studio</a></h2>-->
+<!--								<p class="admin"><span>30 March 2018</span></p>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+
+<!--					<div class="col-md-3 colorlib-widget">-->
+<!--						<h4>Contact Info</h4>-->
+<!--						<ul class="colorlib-footer-links">-->
+<!--							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>-->
+<!--							<li><a href="tel://1234567920"><i class="icon-phone"></i> + 1235 2355 98</a></li>-->
+<!--							<li><a href="mailto:info@yoursite.com"><i class="icon-envelope"></i> info@yoursite.com</a></li>-->
+<!--							<li><a href="#"><i class="icon-location4"></i> yourwebsite.com</a></li>-->
+<!--						</ul>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="copy">-->
+<!--				<div class="container">-->
+<!--					<div class="row">-->
+						<div id="colorlib-footer" style="text-align:center;padding-bottom:10px; padding-top:10px" >
+							Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </br>
+								<img src="{{url_for('static',filename='images/1200px-Orange_logo.svg.png')}}" height="5%" width="5%">
+						</div>
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+	</div>
+
+	<!-- jQuery -->
+	<script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+	<!-- jQuery Easing -->
+	<script src="{{url_for('static',filename='js/jquery.easing.1.3.js')}}"></script>
+	<!-- Bootstrap -->
+	<script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+	<!-- Waypoints -->
+	<script src="{{url_for('static',filename='js/jquery.waypoints.min.js')}}"></script>
+	<!-- Stellar Parallax -->
+	<script src="{{url_for('static',filename='js/jquery.stellar.min.js')}}"></script>
+	<!-- YTPlayer -->
+	<script src="{{url_for('static',filename='js/jquery.mb.YTPlayer.min.js')}}"></script>
+	<!-- Owl carousel -->
+	<script src="{{url_for('static',filename='js/owl.carousel.min.js')}}"></script>
+	<!-- Magnific Popup -->
+	<script src="{{url_for('static',filename='js/jquery.magnific-popup.min.js')}}"></script>
+	<script src="{{url_for('static',filename='js/magnific-popup-options.js')}}"></script>
+	<!-- Counters -->
+	<script src="{{url_for('static',filename='js/jquery.countTo.js')}}"></script>
+	<!-- Main -->
+	<script src="{{url_for('static',filename='js/main.js')}}"></script>
+
+	</body>
+</html>
+

@@ -1,0 +1,366 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/html">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Évaluation QUEREO_FR</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+
+<!--  &lt;!&ndash; Facebook and Twitter integration &ndash;&gt;-->
+<!--	<meta property="og:title" content=""/>-->
+<!--	<meta property="og:image" content=""/>-->
+<!--	<meta property="og:url" content=""/>-->
+<!--	<meta property="og:site_name" content=""/>-->
+<!--	<meta property="og:description" content=""/>-->
+<!--	<meta name="twitter:title" content="" />-->
+<!--	<meta name="twitter:image" content="" />-->
+<!--	<meta name="twitter:url" content="" />-->
+<!--	<meta name="twitter:card" content="" />-->
+
+	<link href="{{url_for('static',filename='https://fonts.googleapis.com/css?family=Poppins:300,400,500,600')}}" rel="stylesheet">
+	<link href="{{url_for('static',filename='https://fonts.googleapis.com/css?family=Nunito:200,300,400')}}" rel="stylesheet">
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/animate.css')}}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/icomoon.css')}}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.css')}}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/magnific-popup.css')}}">
+
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/owl.carousel.min.css')}}">
+	<link rel="stylesheet" href="{{url_for('static',filename='css/owl.theme.default.min.css')}}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+
+	<!-- Modernizr JS -->
+	<script src="{{url_for('static',filename='js/modernizr-2.6.2.min.js')}}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="{{url_for('static',filename='js/respond.min.js')}}"></script>
+	<![endif]-->
+
+		<script src="{{url_for('static',filename='js/saveFormValues.js')}}" language="javascript1.2" type="text/javascript"></script>
+<script src="{{url_for('static',filename='js/cookie.js')}}" language="javascript1.2" type="text/javascript"></script>
+
+
+	</head>
+<!--	<body onload="recoverInputs(document.forms.form1,retrieveCookie('cook'),true);" onunload="setCookie('cook',getFormString(document.forms.form1,true));">-->
+	<body onload="nbqr();" onunload="nbqr();" >
+
+    <div class="colorlib-loader"></div>
+
+	<p id="page">
+		<nav class="colorlib-nav" role="navigation" style="background-color:#499bea;width:100%">
+			<div class="top-menu">
+				<div class="container">
+					<div class="row">
+						<div class=" text-right menu-1">
+							<ul >
+                                <li ><a href="{{url_for('index')}}">Accueil</a></li>
+								<li class="has-dropdown active">
+									<a href="{{url_for('index')}}">évaluation</a>
+									<ul class="dropdown ">
+										<li><a href="{{url_for('quereo_fr')}}">QUEREO_FR</a></li>
+                                        <li><a href="{{url_for('quereo_en')}}">QUEREO_EN</a></li>
+										<li><a href="{{url_for('generation_corpus')}}">Génération Automatique de Corpus Q/R</a></li>
+									</ul>
+								</li>
+								<li><a href="{{url_for('documentation')}}">documentation</a></li>
+								<li ><a href="{{url_for('contact')}}">contact</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+        </nav>
+
+
+
+<br><br><br><br>
+
+<script type="text/javascript" language="javascript">
+
+function nbqr(){
+var compteur = 0;
+for(let i=0;i<{{len}};i++){
+
+	nom="bradio".concat(i)
+	if (document.getElementById(nom).checked){compteur ++;}
+	}
+	document.getElementById("compteur").firstChild.nodeValue = compteur;
+return compteur;
+}
+
+function changeColor(item) {
+   item.style.color="#922B21";
+
+  }
+
+
+function incremente(cpt){
+nom="bradio".concat(cpt)
+document.getElementById(nom).checked = true;
+document.getElementById("compteur").firstChild.nodeValue = nbqr();
+}
+
+function check_box(item,indice){
+if (item.options[item.selectedIndex].value=='correcte'){
+nom_box="erreur5".concat(indice);
+document.getElementById(nom_box).checked = true;
+}
+
+}
+
+</script>
+
+<form id="form1" name="form1" action="resultat_quereo_fr.html" method="POST">
+<!--	onclick="javascript:incremente();"-->
+	<ol >
+        {%for i in range(0, len)%}
+		<li><label style = "font-family:georgia,garamond,serif;font-size:19px;font-style:italic; padding-left:10px; color:blue" >Question :</label> <font color="black"> {{content[i]['QUESTION']}}</font>
+			<br><label style = "font-family:georgia,garamond,serif;font-size:20px;font-style:italic; padding-left:10px; color:blue" >Réponse :</label> <font color="black">{{content[i]['GENERATED_ANSWER']}}</font>
+		<br><span id="evaluation" class=" colorlib-bg-white" style="display: grid;grid-template-columns: 100px 250px 500px 170px 250px 20px; height:400px; font-family:sans-serif; font-size:17px;">
+		{% if flag=='save' or flag=='recover'%}
+				<label style="color:black;grid-column: 1;align-self: center;"><b>Évaluation : </b>  </label>
+
+				<select  id="listeEval{{i}}" name="eval{{i}}"   {% if i < nbrep|int %} style="grid-column: 2;;height:20px; width:80%;align-self: center;color:#922B21" {%else%} style="grid-column: 2;;height:20px; width:80%;align-self: center;"  {% endif %} onclick="changeColor(this);incremente({{i}});check_box(this,{{i}});"  >
+				<option id="repaeval" value="aevaluer" {%if content[i]['EVALUATION']=='évaluer'%} selected="selected"  {% endif %}>À évaluer</option>
+					<option onselect="check_box({{i}});" id="optcorect" value="correcte" {%if content[i]['EVALUATION']=='correcte'%} selected="selected"  {% endif %}>Correcte</option>
+					<option  id="optsemicorecte" value="semicorrecte" {%if content[i]['EVALUATION']=='semicorrecte'%} selected="selected"  {% endif %} >Correcte mais pas naturelle</option>
+					<option id="optpascorecte" value="faux" {%if content[i]['EVALUATION']=='faux'%} selected="selected"  {% endif %}>Non Correcte</option>
+			</select>
+				<div style="height:350">
+				<fieldset {% if i < nbrep|int %} style="color:#922B21;border:3px solid; padding:5px 220px 10px 10px;" {%else%} style="border:3px solid; padding:5px 220px 10px 10px;"{% endif %}  onclick="changeColor(this);incremente({{i}});" >
+					<legend style="font-family:sans-serif; font-size:17px;border:0; text-align:center" ><b>Type d'erreur</b></legend>
+					<input id="erreur1{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="ordre" {%if 'ordre' in content[i]['ERROR']%} checked="checked"  {% endif %} >&nbsp;&nbsp;Ordre des mots<br>
+					<input id="erreur2{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="accord" {%if 'accord' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Accord grammatical <br>
+					<input id="erreur3{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="extra" {%if 'extra' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Mot en trop <br>
+					<input id="erreur4{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="manque" {%if 'manque' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Manque un ou plusieurs termes <br>
+					<input id="erreur5{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="aucun" {%if 'aucun' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Aucune <br>
+					<input id="erreur6{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="prep" {%if 'prep' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Prépostion incorrecte <br>
+					<input id="erreur7{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="autre" {%if 'autre' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Autre <br>
+				</fieldset>
+				</div>
+<!--			<label style="color:black;grid-column: 3;align-self: center;"><b>Type d'erreur : </b></label>-->
+<!--			<select style="grid-column: 4;" id="listeErreur{{i}}" name="erreur{{i}}" multiple="multiple" size="8" {% if i < nbrep|int %} style="color:#922B21;" {% endif %} onclick="changeColor(this);incremente({{i}});">-->
+<!--			<option value="erreuraeval" {%if  'évaluer' in content[i]['ERROR']%} selected="selected"  {% endif %}>À évaluer</option>-->
+<!--			<option value="ordre" {%if 'ordre' in content[i]['ERROR']%} selected="selected"  {% endif %}>Ordre des mots</option>-->
+<!--				<option value="accord" {%if 'accord' in content[i]['ERROR']%} selected="selected"  {% endif %}>Accord grammatical</option>-->
+<!--				<option value="extra" {%if 'extra' in content[i]['ERROR']%} selected="selected"  {% endif %}>Mot en trop</option>-->
+<!--				<option value="manque" {%if 'manque' in content[i]['ERROR']%} selected="selected"  {% endif %}>Manque un ou plusieurs termes</option>-->
+<!--				<option value="aucun" {%if 'aucun' in content[i]['ERROR']%} selected="selected"  {% endif %}>Aucune</option>-->
+<!--				<option value="prep" {%if 'prep' in content[i]['ERROR']%} selected="selected"  {% endif %}>Prépostion incorrecte</option>-->
+<!--				<option value="autre" {%if 'autre' in content[i]['ERROR']%} selected="selected"  {% endif %}>Autre</option>-->
+
+<!--			</select>-->
+
+				<label style="color:black;grid-column: 4;align-self: center;"><b>&nbsp;&nbsp;&nbsp;Commentaire : </b></label>
+				<textarea style="grid-column: 5; height:20%;width:100%; align-self: center;" onchange="changeColor(this);incremente({{i}});" name="comment{{i}}" rows="1" cols="20" autocomplete="on"  {% if i < nbrep|int %} style="color:#922B21;'" {% endif %}>{{content[i]['COMMENT']}}</textarea>
+			<input type="radio" name="count{{i}}" id="bradio{{i}}"  style="visibility:hidden; display:none;;grid-column: 6;" {% if i < nbrep|int %}checked {%endif%} >
+
+		{%else%}
+			<label style="color:black;grid-column: 1;align-self: center; "><b>Évaluation : </b>  </label>
+			<select style="grid-column: 2;height:20px; width:80%;align-self: center; " id="listeEval{{i}}" name="eval{{i}}"  onclick="changeColor(this);incremente({{i}});check_box(this,{{i}});"  >
+				<option id="repaeval" value="aevaluer" {%if content[i]['EVALUATION']=='évaluer'%} selected="selected"  {% endif %}>À évaluer</option>
+				<option onselect="check_box({{i}});" id="optcorect" value="correcte" {%if content[i]['EVALUATION']=='correcte'%} selected="selected"  {% endif %}>Correcte</option>
+				<option  id="optsemicorecte" value="semicorrecte" {%if content[i]['EVALUATION']=='semicorrecte'%} selected="selected"  {% endif %} >Correcte mais pas naturelle</option>
+				<option id="optpascorecte" value="faux" {%if content[i]['EVALUATION']=='faux'%} selected="selected" {% endif %}>Non Correcte</option>
+		</select>
+<!--			<label style="color:black;grid-column: 3;align-self: center; "><b>Type d'erreur : </b></label>-->
+			<div style="height:350">
+			<fieldset style="border:3px solid; padding:5px 220px 10px 10px;" onclick="changeColor(this);">
+				<legend style="font-family:sans-serif; font-size:17px;border:0; text-align:center" ><b>Type d'erreur</b></legend>
+				<input id="erreur1{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="ordre" {%if 'ordre' in content[i]['ERROR']%} checked="checked"  {% endif %} >&nbsp;&nbsp;Ordre des mots<br>
+				<input id="erreur2{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="accord" {%if 'accord' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Accord grammatical <br>
+				<input id="erreur3{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="extra" {%if 'extra' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Mot en trop <br>
+				<input id="erreur4{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="manque" {%if 'manque' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Manque un ou plusieurs termes <br>
+				<input id="erreur5{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="aucun" {%if 'aucun' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Aucune <br>
+				<input id="erreur6{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="prep" {%if 'prep' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Prépostion incorrecte <br>
+				<input id="erreur7{{i}}" onclick="changeColor(this);incremente({{i}});" type="checkbox" name="erreur{{i}}" value="autre" {%if 'autre' in content[i]['ERROR']%} checked="checked"  {% endif %}>&nbsp;&nbsp;Autre <br>
+			</fieldset>
+			</div>
+
+<!--				<select style="grid-column: 4;width:80%;" id="listeErreur{{i}}" name="erreur{{i}}"  onclick="changeColor(this);incremente({{i}});" multiple="multiple" size="4">-->
+<!--					<option value="erreuraeval" {%if  'évaluer' in content[i]['ERROR']%} selected="selected"  {% endif %}>À évaluer</option>-->
+<!--					<option value="ordre" {%if 'ordre' in content[i]['ERROR']%} selected="selected"  {% endif %}>Ordre des mots</option>-->
+<!--					<option value="accord" {%if 'accord' in content[i]['ERROR']%} selected="selected"  {% endif %}>Accord grammatical</option>-->
+<!--					<option value="extra" {%if 'extra' in content[i]['ERROR']%} selected="selected"  {% endif %}>Mot en trop</option>-->
+<!--					<option value="manque" {%if 'manque' in content[i]['ERROR']%} selected="selected"  {% endif %}>Manque un ou plusieurs termes</option>-->
+<!--					<option value="aucun" {%if 'aucun' in content[i]['ERROR']%} selected="selected"  {% endif %}>Aucune</option>-->
+<!--					<option value="prep" {%if 'prep' in content[i]['ERROR']%} selected="selected"  {% endif %}>Prépostion incorrecte</option>-->
+<!--					<option value="autre" {%if 'autre' in content[i]['ERROR']%} selected="selected"  {% endif %}>Autre</option>-->
+<!--			</select>-->
+		<label style="color:black;grid-column: 4;align-self: center;"><b>&nbsp;&nbsp;&nbsp;Commentaire : </b></label>
+			<textarea style="grid-column: 5; height:20%;width:100%; align-self: center;" onchange="changeColor(this);incremente({{i}});" name="comment{{i}}" rows="1" cols="20" autocomplete="on"  >{{content[i]['COMMENT']}}</textarea>
+		<input type="radio" name="count{{i}}" id="bradio{{i}}"  style="visibility:hidden; display:none;;grid-column: 6;"  >
+		{%endif%}
+		</span>
+	</li>
+<br>
+{%endfor%}
+
+	</ol>
+		<center> <input style="color:white;background-color:blue" type="submit" value="Valider vos réponses" /></center>
+			</form>
+<br><br>
+
+
+
+
+
+
+
+
+<!--			<div class="container">-->
+<!--				<div class="row row-pb-md">-->
+<!--					<div class="col-md-3 colorlib-widget">-->
+<!--						<h4>About unapp</h4>-->
+<!--						<p>Far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics</p>-->
+<!--						<p>-->
+<!--							<ul class="colorlib-social-icons">-->
+<!--								<li><a href="#"><i class="icon-twitter"></i></a></li>-->
+<!--								<li><a href="#"><i class="icon-facebook"></i></a></li>-->
+<!--								<li><a href="#"><i class="icon-linkedin"></i></a></li>-->
+<!--								<li><a href="#"><i class="icon-dribbble"></i></a></li>-->
+<!--							</ul>-->
+<!--						</p>-->
+<!--					</div>-->
+<!--					<div class="col-md-3 colorlib-widget">-->
+<!--						<h4>Information</h4>-->
+<!--						<p>-->
+<!--							<ul class="colorlib-footer-links">-->
+<!--								<li><a href="#"><i class="icon-check"></i> Home</a></li>-->
+<!--								<li><a href="#"><i class="icon-check"></i> Gallery</a></li>-->
+<!--								<li><a href="#"><i class="icon-check"></i> About</a></li>-->
+<!--								<li><a href="#"><i class="icon-check"></i> Blog</a></li>-->
+<!--								<li><a href="#"><i class="icon-check"></i> Contact</a></li>-->
+<!--								<li><a href="#"><i class="icon-check"></i> Privacy</a></li>-->
+<!--							</ul>-->
+<!--						</p>-->
+<!--					</div>-->
+
+<!--					<div class="col-md-3 colorlib-widget">-->
+<!--						<h4>Recent Blog</h4>-->
+<!--						<div class="f-blog">-->
+<!--							<a href="blog.html" class="blog-img" style="background-image: url(images/blog-1.jpg);">-->
+<!--							</a>-->
+<!--							<div class="desc">-->
+<!--								<h2><a href="blog.html">Photoshoot Technique</a></h2>-->
+<!--								<p class="admin"><span>30 March 2018</span></p>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--						<div class="f-blog">-->
+<!--							<a href="blog.html" class="blog-img" style="background-image: url(images/blog-2.jpg);">-->
+<!--							</a>-->
+<!--							<div class="desc">-->
+<!--								<h2><a href="blog.html">Camera Lens Shoot</a></h2>-->
+<!--								<p class="admin"><span>30 March 2018</span></p>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--						<div class="f-blog">-->
+<!--							<a href="blog.html" class="blog-img" style="background-image: url(images/blog-3.jpg);">-->
+<!--							</a>-->
+<!--							<div class="desc">-->
+<!--								<h2><a href="blog.html">Imahe the biggest photography studio</a></h2>-->
+<!--								<p class="admin"><span>30 March 2018</span></p>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+
+<!--					<div class="col-md-3 colorlib-widget">-->
+<!--						<h4>Contact Info</h4>-->
+<!--						<ul class="colorlib-footer-links">-->
+<!--							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>-->
+<!--							<li><a href="tel://1234567920"><i class="icon-phone"></i> + 1235 2355 98</a></li>-->
+<!--							<li><a href="mailto:info@yoursite.com"><i class="icon-envelope"></i> info@yoursite.com</a></li>-->
+<!--							<li><a href="#"><i class="icon-location4"></i> yourwebsite.com</a></li>-->
+<!--						</ul>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="copy">-->
+<!--				<div class="container">-->
+<!--					<div class="row">-->
+						<div id="colorlib-footer" style="text-align:center;padding-bottom:10px; padding-top:10px" >
+							Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </br>
+								<img src="{{url_for('static',filename='images/1200px-Orange_logo.svg.png')}}" height="5%" width="5%">
+						</div>
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+
+
+<!--	<div class="gototop js-top">-->
+<!--		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>-->
+<!--	</div>-->
+<script>
+	function saveform(){
+<!--	document.form1.action="Quereo_SaveRecover.html?flag=save";-->
+    nb=nbqr()
+		document.form1.action="quereo_fr.html?flag=save&nbr=".concat(nb);
+	document.form1.submit();
+	}
+
+	function recoverform(){
+	window.location.href="{{url_for('quereo_fr')}}";
+	}
+
+
+</script>
+<!-- recoverform():	window.location.href="{{url_for('quereo_fr',nbr='x')}}".replace("x",n);-->
+	<div class="gototop js-top">
+<!--		<a href="#" class="js-gotop"></a>-->
+
+<!--		<input style="background-color:black;color:white;" type="button" value="Sauvegarder" onclick="setCookie('cook',getFormString(document.form1,true));">-->
+<!--		<input style="background-color:black;color:white;" type="button" value="Recharger" onclick="recoverInputs(document.form1,retrieveCookie('cook'),true);"><br>-->
+
+<!--		<a href="{{url_for('Quereo_SaveRecover',flag=['save'],formulaire=[form1])}}"><input style="background-color:black;color:white;" type="button" value="Sauvegarder"></a>-->
+<!--		<a href="{{url_for('Quereo_SaveRecover',flag='recover')}}" > <input style="background-color:black;color:white;" type="button" value="Recharger" ></a><br>-->
+
+		<input style="background-color:black;color:white;" type="button" value="Sauvegarder" onclick="saveform();">
+<!--		<input style="background-color:black;color:white;" type="button" value="Recharger" onclick="window.location.href='{{url_for('Quereo_SaveRecover',flag=['recover'])}}';"><<br>-->
+		<input style="background-color:black;color:white;" type="button" value="Recharger" onclick="recoverform();"><br>
+<!--		onclick="window.location.href='{{url_for('quereo_fr',flag=['recover'], nbr=[comp])}}';"-->
+
+
+
+<!--		<label style="color:black; "><b>Nombre de Q/R evaluées : <script type="text/javascript"> document.write(counter)</script> </b>  </label>-->
+				<label  style="color:black; "><b>Nombre de Q/R évaluées : <label id="compteur"> </label> </b>  </label>
+
+
+<!--		<a href="{{url_for('quereo_fr')}}" class="btn btn-primary btn-lg btn-custom">sauvegarder</a>-->
+	</div>
+
+	<!-- jQuery -->
+	<script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+	<!-- jQuery Easing -->
+	<script src="{{url_for('static',filename='js/jquery.easing.1.3.js')}}"></script>
+	<!-- Bootstrap -->
+	<script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+	<!-- Waypoints -->
+	<script src="{{url_for('static',filename='js/jquery.waypoints.min.js')}}"></script>
+	<!-- Stellar Parallax -->
+	<script src="{{url_for('static',filename='js/jquery.stellar.min.js')}}"></script>
+	<!-- YTPlayer -->
+	<script src="{{url_for('static',filename='js/jquery.mb.YTPlayer.min.js')}}"></script>
+	<!-- Owl carousel -->
+	<script src="{{url_for('static',filename='js/owl.carousel.min.js')}}"></script>
+	<!-- Magnific Popup -->
+	<script src="{{url_for('static',filename='js/jquery.magnific-popup.min.js')}}"></script>
+	<script src="{{url_for('static',filename='js/magnific-popup-options.js')}}"></script>
+	<!-- Counters -->
+	<script src="{{url_for('static',filename='js/jquery.countTo.js')}}"></script>
+	<!-- Main -->
+	<script src="{{url_for('static',filename='js/main.js')}}"></script>
+
+	</body>
+</html>
+
